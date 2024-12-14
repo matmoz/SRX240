@@ -1,13 +1,27 @@
-set cli screen-width 1000                                           # wylaczenie zawijania
+! set cli screen-length 1000                                                   # wylaczenie zawijania lini
 
-set cli screen-width 1000                                           # wylaczenie zawijania
+! set cli screen-width 1000                                                    # wylaczenie zawijania wierszy
 
-request system zeroize                                              # restart
+request system zeroize                                                         # restart
 
-set system host-name SRX240                                         # nadanie nazwy
+set system host-name SRX240                                                    # nadanie nazwy
 
-set system root-authentication plain-text-password                  # !!! wymagane ustawienie hasla
+set system root-authentication plain-text-password                             # !!! wymagane ustawienie hasla
 
-set system domain-name srx-240.local                                # ustawienie nazwy domeny dla połączenia https
+set system domain-name srx-240.local                                           # ustawienie nazwy domeny dla połączenia https
 
-set interfaces ge-0/0/2 unit 0 family inet address 192.168.1.xx/24  # suatwienie IP stałego na porcie
+delete interfaces ge-0/0/2 unit 0 family ethernet-switching                    # kasowanie przypisanej family
+
+set interfaces ge-0/0/2 unit 0 family inet address 192.168.1.xx/24             # suatwienie IP stałego na porcie
+
+set system services ssh                                                        # aktywowanie ssh
+
+set system login user mmo class super-user authentication plain-text-password  # dodawanie usera do polaczen np. ssh
+
+run set date 202412142200.00                                                   # ustawienie daty
+
+set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                # ustawianie statycznej sciezki
+
+! request system configuration rescue save                                     # zapisanie konfiguracji obecnej
+
+! request system reboot                                                        # restart 
