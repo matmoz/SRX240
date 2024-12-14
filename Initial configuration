@@ -1,1 +1,13 @@
+set cli screen-width 1000                                           # wylaczenie zawijania
 
+set cli screen-width 1000                                           # wylaczenie zawijania
+
+request system zeroize                                              # restart
+
+set system host-name SRX240                                         # nadanie nazwy
+
+set system root-authentication plain-text-password                  # !!! wymagane ustawienie hasla
+
+set system domain-name srx-240.local                                # ustawienie nazwy domeny dla połączenia https
+
+set interfaces ge-0/0/2 unit 0 family inet address 192.168.1.xx/24  # suatwienie IP stałego na porcie
