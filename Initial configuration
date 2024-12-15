@@ -46,6 +46,8 @@ set interfaces ge-0/0/7 unit 0 family ethernet-switching vlan members <nazwa>  #
 
 set vlans <nazwa_vlan> vlan-id <id_vlan>                                       # dodawanie VLANow
 
+set security zones security-zone trust interfaces ge-0/0/0 
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 
