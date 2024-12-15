@@ -38,6 +38,8 @@ set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                #
 
 delete interfaces ge-0/0/2 unit 0 family ethernet-switching                    # kasowanie przypisanej family
 
+delete security zones security-zone untrust interfaces ge-0/0/0.0 
+
 set vlans <nazwa_vlan> vlan-id <id_vlan>                                       # dodawanie VLANow
 
 set interfaces ge-0/0/7 unit 0 family ethernet-switching vlan members <nazwa>  # dodawanie portu do VLANa   
