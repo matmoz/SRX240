@@ -1,0 +1,90 @@
+> request security pki generate-key-pair size 2048 type rsa certificate-id 
+> request security pki local-certificate generate-self-signed certificate-id HomeLabMMO subject "DC=HomeLabMMO.com,CN=HomeLabMMO" domain-name "HomeLabMMO.com" 
+> show security pki local-certificate certificate-id HomeLabMMO 
+
+# top set security zones security-zone VPN interfaces ge-0/0/2  
+# set security zones security-zone Servers interfaces ge-0/0/4    
+# set system services web-management https pki-local-certificate HomeLabMMO 
+# edit security nat source rule-set RA-HomeLabMMO-VPN-src
+# set from zone VPN 
+# set to zone Servers 
+# set rule HomeLabMMO-rule match source-address 192.168.1.0/24      # jesli chcemy z dowolnego miejsca to 0/0
+# set rule HomeLabMMO-rule then source-nat interface    
+# top edit security address-book global 
+# set address Servers 192.168.0.0/24 
+# up 2 edit policies from-zone Servers to-zone VPN policy RA-HomeLabMMO-VPN-pol_1
+# set match source-address Servers destination-address any application any 
+# set then permit 
+# up 2 
+# edit from-zone VPN to-zone Servers policy RA-HomeLabMMO-VPN-pol_2 
+# set match source-address any destination-address Servers application any  
+# set then permit
+# up 1 edit zones security-zone untrust 
+# set host-inbound-traffic system-services ike 
+# set host-inbound-traffic system-services all
+----------------------------------------------------------------------------------------------------------
+# top edit access address-assignment pool RA-HomeLabMMO-Pool family inet    
+# set network 10.77.77.0/24
+# set range RA-HomeLabMMO-Range low 10.77.77.1 high 10.77.77.50 
+# set xauth-attributes primary-dns 8.8.8.8 
+# top edit access profile RA-HomeLabMMO-Access
+# set client user_01 firewall-user password user123
+# set firewall-authentication web-authentication default-profile RA-HomeLabMMO- Access
+----------------------------------------------------------------------------------------------------------
+# top edit services ssl termination
+# set profile RA-HomeLabMMO-term server-certificate HomeLabMMO
+# top edit security tcp-encap 
+# set profile SSL-VPN-RA-HomeLabMMO ssl-profile RA-HomeLabMMO-term
+# top edit security ike proposal RA-HomeLabMMO-VPN-pro
+# set authentication-method pre-shared-keys dh-group group19
+# set authentication-algorythm sha-256 encryption-algorithm aes-256-cbc
+# up 1 edit policy RA-HomeLabMMO-pol
+# set mode aggressive proposals RA-HomeLabMMO-VPN-pro pre-shared-key ascii-text juniper123
+# up 1 edit gateway RA-HomeLabMMO-VPN-gateway
+# set ike-policy RA-HomeLabMMO-VPN-pol
+# set dynamic user-at-hostname user_01@HomeLabMMO.com
+# set dynamic ike-user-type shared-ike-id
+# set dead-peer-detection optimized interval 10 treshold 5
+# set external-interface ge-0/0/2
+# set local-address 192.168.1.69
+# set aaa access-profile RA-HomeLabMMO-Access
+# set version v1-only
+# set tcp-encap-profile SSL-VPN-RA-HomeLabMMO
+# up 2
+# edit ipsec
+# set proposal RA-HomeLabMMO-VPN-pro protocol esp encryption-algorithm aes-256-gcm
+# set policy RA-HomeLabMMO-pol perfect-forward-secrecy keys group19
+# set policy RA-HomeLabMMO-pol proposals RA-HomeLabMMO-pol proposals RA-HomeLabMMO-pro
+# edit vpn RA-HomeLabMMO-VPN
+# set bind-interface st0 df-bit clear
+# set ike gateway RA-HomeLabMMO-VPN-gateway ipsec-policy RA-HomeLabMMO-VPN-pol
+# set traffic-selector ts-1 local-ip 192.168.0.0/24 remote-ip 0/0
+# up 2
+# edit remote-access
+# set client-config RA-HomeLabMMO-VPN-Client dead-peer-detection interval 60 threshold 5
+# set profile RA-HomeLabMMO-VPN-pro ipsec-vpn RA-HomeLabMMO-VPN
+# set profile RA-HomeLabMMO-VPN-pro access-profile RA-HomeLabMMO-Access
+# set profile RA-HomeLabMMO-VPN-pro client-config RA-HomeLabMMO-VPN-Client
+# set default-profile RA-HomeLabMMO-VPN-pro
+# commit and-quit
+
+
+edit access 
+edit profile profile_1 
+set client profile_1-user1 firewall-user password 123456 
+set address-assignment pool profile_1-pool 
+up
+edit address-assignment pool profile_1-pool 
+set family inet network 192.168.1.0/24
+set family inet xauth-attributes primary-dns 8.8.8.8 
+up up
+set firewall-authentication web-authentication default-profile profile_1 
+top edit security zones security-zone untrust 
+set interfaces ge-0/0/2 host-inbound-traffic system-services https
+set interfaces ge-0/0/2 host-inbound-traffic system-services ike   
+ top edit security ike 
+set policy profile_1-ike-pol 
+set policy profile_1-ike-pol mode aggressive 
+set policy profile_1-ike-pol proposal-set standard 
+set policy profile_1-ike-pol pre-shared-key ascii-text juniper123 
+set gateway profile_1-GW ike-policy profile_1-ike-pol     
