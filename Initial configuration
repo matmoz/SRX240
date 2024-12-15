@@ -20,34 +20,34 @@ set system services ssh                                                        #
 
 set system login user mmo class super-user authentication plain-text-password  # dodawanie usera do polaczen np. ssh
 
-
-
-
 > request system configuration rescue save                                     # zapisanie konfiguracji obecnej
 
+> request system reboot                                                        # restart 
 
+----------------------------------------------------------------------------------------------------------------------------------------
 
-
-set system domain-name srx-240.local                                           # ustawienie nazwy domeny dla połączenia https
-
-
-set interfaces ge-0/0/2 unit 0 family inet address 192.168.1.xx/24             # uatwienie IP stałego na porcie
-
-set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                # ustawianie statycznej sciezki
-
+delete interfaces vlan unit 0 family inet address 192.168.1.1/24
 
 delete interfaces ge-0/0/2 unit 0 family ethernet-switching                    # kasowanie przypisanej family
 
 delete security zones security-zone untrust interfaces ge-0/0/0.0 
 
-set vlans <nazwa_vlan> vlan-id <id_vlan>                                       # dodawanie VLANow
+----------------------------------------------------------------------------------------------------------------------------------------
+
+set interfaces ge-0/0/2 unit 0 family inet address 192.168.1.xx/24             # uatwienie IP stałego na porcie
+
+set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                # ustawianie statycznej sciezki
 
 set interfaces ge-0/0/7 unit 0 family ethernet-switching vlan members <nazwa>  # dodawanie portu do VLANa   
 
-> request system reboot                                                        # restart 
+set vlans <nazwa_vlan> vlan-id <id_vlan>                                       # dodawanie VLANow
+
+----------------------------------------------------------------------------------------------------------------------------------------
 
 
 
+
+set system domain-name srx-240.local                                           # ustawienie nazwy domeny dla połączenia https
 
 
 
