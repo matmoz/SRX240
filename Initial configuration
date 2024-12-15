@@ -1,6 +1,9 @@
+
 ! set cli screen-length 1000                                                   # wylaczenie zawijania lini
 
 ! set cli screen-width 1000                                                    # wylaczenie zawijania wierszy
+
+show | display set                                                             # pokazuje wprowadzone zmiany
 
 request system zeroize                                                         # restart
 
@@ -31,6 +34,8 @@ set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                #
 set system login message "wiadomosc"                                           # ustawienie wiadomosci powitalnej 
 
 set vlans <nazwa_vlan> vlan-id <id_vlan>                                       # dodawanie VLANow
+
+set interfaces ge-0/0/7 unit 0 family ethernet-switching vlan members <nazwa>  # dodawanie portu do VLANa   
 
 
 
