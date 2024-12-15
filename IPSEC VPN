@@ -1,0 +1,15 @@
+1 Konfiguracja wniosku
+2 Konfiguracja politki 
+3 Konfiguracja bramy
+
+edit security ike     #
+edit proposal Lab_proposal
+set authentication-method pre-shared-keys 
+set dh-group group2   
+set authentication-algorithm sha1  
+set encryption-algorithm 3des-cbc 
+set lifetime-seconds 86400  
+up
+edit policy LAB_IKE
+set mode main 
+set proposals Lab_proposal  
