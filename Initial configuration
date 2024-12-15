@@ -22,11 +22,11 @@ set system login user mmo class super-user authentication plain-text-password  #
 
 > request system configuration rescue save                                     # zapisanie konfiguracji obecnej
 
-save /var/tmp/nazwa_pliku.conf
-
-load override /var/tmp/srx_config_backup.conf
+# save /var/tmp/nazwa_pliku.conf
+# load override /var/tmp/srx_config_backup.conf
 
 > request system reboot                                                        # restart 
+> request system power-off
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
