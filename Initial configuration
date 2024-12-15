@@ -20,8 +20,20 @@ set system login user mmo class super-user authentication plain-text-password  #
 
 run set date 202412142200.00                                                   # ustawienie daty
 
+set system time-zone Europe/Warsaw                                             # ustawinie strefy czasowej
+
 set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                # ustawianie statycznej sciezki
 
 ! request system configuration rescue save                                     # zapisanie konfiguracji obecnej
 
 ! request system reboot                                                        # restart 
+
+set system login message "wiadomosc"                                           # ustawienie wiadomosci powitalnej 
+
+set vlans <nazwa_vlan> vlan-id <id_vlan>                                       # dodawanie VLANow
+
+
+
+
+
+
