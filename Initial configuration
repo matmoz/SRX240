@@ -32,9 +32,13 @@ delete interfaces ge-0/0/2 unit 0 family ethernet-switching                    #
 
 delete security zones security-zone untrust interfaces ge-0/0/0.0 
 
+delete routing-options static route 192.168.1.1
+
+delete system services dhcp pool 192.168.1.0/24
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-set interfaces ge-0/0/2 unit 0 family inet address 192.168.1.xx/24             # uatwienie IP stałego na porcie
+set interfaces ge-0/0/0 unit 0 family inet address 192.168.1.xx/24             # uatwienie IP stałego na porcie
 
 set routing-options static route 0.0.0.0/0 next-hop 192.168.1.1                # ustawianie statycznej sciezki
 
