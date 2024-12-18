@@ -4,7 +4,7 @@ set security zones security-zone inside
 set security zones security-zone outside interfaces ge-0/0/0.0                  # przypisanie interfejsów do zony
 set security zones security-zone inside interfaces ge-0/0/6.0
 
-set security address-book global address NET_192_168_0_0__24 192.168.0.120/32 # Tworzy nowy wpis w globalnym address book urządzenia Juniper SRX.
+set security address-book global address NET_192_168_0_0__24 192.168.0.0/24 # Tworzy nowy wpis w globalnym address book urządzenia Juniper SRX.
 
 
 ----------------------------------------------utworzenie polityki-------------------------------------------------------------------------
