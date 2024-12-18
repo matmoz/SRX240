@@ -9,11 +9,11 @@ set security address-book global address NET_192_168_0_0__24 192.168.0.120/32 # 
 
 ----------------------------------------------utworzenie polityki-------------------------------------------------------------------------
 
-set security policies from-zone outside to-zone inside policy PERMIT-ALL match source-address any   
-set security policies from-zone outside to-zone inside policy PERMIT-ALL match destination-address NET_192_168_0_0__24 
-set security policies from-zone outside to-zone inside policy PERMIT-ALL match application any
-set security policies from-zone outside to-zone inside policy PERMIT-ALL then permit 
-set security policies from-zone outside to-zone inside policy PERMIT-ALL then log session-init 
+set security policies from-zone untrust to-zone trust policy PERMIT-ALL match source-address any   
+set security policies from-zone untrust to-zone trust policy PERMIT-ALL match destination-address NET_192_168_0_0__24 
+set security policies from-zone untrust to-zone trust policy PERMIT-ALL match application any
+set security policies from-zone untrust to-zone trust policy PERMIT-ALL then permit 
+set security policies from-zone untrust to-zone trust policy PERMIT-ALL then log session-init 
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
