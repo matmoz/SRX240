@@ -1,5 +1,11 @@
 request system zeroize                                                         # restart
 
+run show system alarms
+
+request system configuration rescue save                                       # Rescue configuration is not set
+
+request system autorecovery state save                                         # Autorecovery information needs to be saved
+
 show | display set                                                             # pokazuje wprowadzone zmiany
 
 > set cli screen-length 1000                                                   # wylaczenie zawijania lini
@@ -22,13 +28,17 @@ set system login user mmo class super-user authentication plain-text-password  #
 
 > request system configuration rescue save                                     # zapisanie konfiguracji obecnej
 
-# save /var/tmp/nazwa_pliku.conf
-# load override /var/tmp/pelna_konfiguracja.conf 
+# save /var/tmp/SRX_initial.conf
+# load override /var/tmp/SRX_initial.conf
 
 > request system reboot                                                        # restart 
 > request system power-off
 
 ----------------------------------------------------------------------------------------------------------------------------------------
+
+delete system services dhcp propagate-settings ge-0/0/0.0
+
+delete system services dhcp router 192.168.1.1
 
 delete interfaces vlan unit 0 family inet address 192.168.1.1/24
 
