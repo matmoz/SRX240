@@ -1,10 +1,5 @@
 request system zeroize                                                         # restart
 
-run show system alarms
-
-request system configuration rescue save                                       # Rescue configuration is not set
-
-request system autorecovery state save                                         # Autorecovery information needs to be saved
 
 show | display set                                                             # pokazuje wprowadzone zmiany
 
@@ -33,6 +28,11 @@ set system login user mmo class super-user authentication plain-text-password  #
 
 > request system reboot                                                        # restart 
 > request system power-off
+
+run show system alarms
+
+request system configuration rescue save                                       # Rescue configuration is not set
+request system autorecovery state save                                         # Autorecovery information needs to be saved
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
