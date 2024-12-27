@@ -50,6 +50,8 @@ delete routing-options static route 192.168.1.1
 
 delete system services dhcp pool 192.168.1.0/24
 
+delete security zones security-zone untrust screen untrust-screen              # kasowanie blokady
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 set interfaces ge-0/0/0 unit 0 family inet address 192.168.1.69/24             # uatwienie IP stałego na porcie
